@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Predict Software Refactoring</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.min.css">
+  <script>
+    $(document).ready(function() {
+      $('#data-table').DataTable();
+    });
+  </script>
+     <style>
+        .table-container {
+  margin: auto;
+  max-width: 1200px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #eee;
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+select {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  flex: 1;
+}
+
+input[type="submit"] {
+  height: 42px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.sameRow form {
+  display: inline-block;
+  margin-bottom: 30px;
+}
+</style>
+</head>
+
+<body>
+    <h1 style="text-align: center; border: 2px solid #ccc; border-radius: 100px; padding: 60px;">View Prediction results</h1>
+    <div style="text-align: center;">
+    <div class="sameRow">
+  <form action="{{ url_for('data_visualization') }}" method="POST">
+    <select name="option">
+      <option value="refactoring">Refactoring distribution</option>
+    </select>
+    <input type="submit" value="See data statistics">
+  </form>
+  <form action="/download" method="get" style="margin-left: 100px;">
+		<input type="submit" value="Download prediction results">
+	</form>
+</div>
+    </div>
+
+     <div class="table-container">
+         <table id="data-table" class="display">
+    <thead>
+      <tr>
+        {% for column in columns %}
+        <th>{{ column }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in table_data %}
+      <tr>
+        {% for value in row.values() %}
+        <td>{{ value }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+     </div>
+</body>
+
+</body>
+</html>
